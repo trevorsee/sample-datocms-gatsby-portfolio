@@ -13,7 +13,7 @@ const baseStyles = () => injectGlobal`
     font-feature-settings: "liga","kern";
     color: white;
     line-height: 1.25;
-    background-color: rgb(49,82,229);
+    background-color: #d8d8d8;
   }
   * {
     box-sizing: border-box;

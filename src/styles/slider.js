@@ -71,7 +71,6 @@ export const Hello = styled.h1`
   font-size: 25vw;
   letter-spacing: -0.02em;
   line-height: 1;
-  animation: ${fadeIn} 2s;
   pointer-events: none;
   @media (min-width: 40em) {
     font-size: 15vw;
