@@ -4,6 +4,7 @@ import Link from "gatsby-link";
 import { HelmetDatoCms } from "gatsby-source-datocms";
 import Carousel from "nuka-carousel";
 import KeyHandler, { KEYDOWN } from "react-key-handler";
+import Img from "gatsby-image";
 
 import baseStyles from '../styles/base'
 import "../assets/fonts/1706-EOCCJS.css"
@@ -110,7 +111,12 @@ class TemplateWrapper extends React.Component {
 
     return (
     <div>
-      <HelmetDatoCms favicon={data.datoCmsSite.faviconMetaTags}>
+      <HelmetDatoCms
+        favicon={data.datoCmsSite.faviconMetaTags}
+        title={data.datoCmsSite.fallbackSeo.title}
+      >
+        <title>{data.datoCmsSite.siteName}</title>
+        <meta name="description" content={data.datoCmsSite.fallbackSeo.description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </HelmetDatoCms>
 
@@ -174,9 +180,16 @@ class TemplateWrapper extends React.Component {
             >
               {stack.slides.map(({ id, title, description, image }, index) => (
                 <div style={{ height: "100vh", width: "100vw" }} key={id}>
-                  <img
-                    style={{ objectFit: "cover", height: "100%", width: "100%", pointerEvents: "none" }}
-                    src={image.url}
+                  <Img
+                    style={{
+                        position: "absolute",
+                        left: 0,
+                        top: 0,
+                        width: "100%",
+                        height: "100%"
+                      }}
+                    alt={title}
+                    sizes={image.sizes}
                   />
                   <HoverBox>
                     <CaptionTitle className="hover-hide">{title}</CaptionTitle>
@@ -220,6 +233,10 @@ export const query = graphql`
     datoCmsSite {
       globalSeo {
         siteName
+        fallbackSeo {
+          title
+          description
+        }
       }
       faviconMetaTags {
         ...GatsbyDatoCmsFaviconMetaTags
@@ -236,7 +253,9 @@ export const query = graphql`
             description
             image {
               id
-              url
+              sizes {
+                ...GatsbyDatoCmsSizes
+              }
             }
           }
         }
