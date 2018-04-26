@@ -16,5 +16,18 @@ module.exports = {
         apiToken: process.env.DATO_API_TOKEN,
       },
     },
+    {
+    resolve: `gatsby-plugin-manifest`,
+    options: {
+      name: "The Independent Group",
+      short_name: "IG",
+      start_url: "/",
+      background_color: "#ffffff",
+      theme_color: "#3152e5",
+      display: "minimal-ui",
+      icon: "src/assets/favicon.png",
+    },
+  },
+  `gatsby-plugin-offline`
   ],
 }

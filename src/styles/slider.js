@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Img from "gatsby-image";
 import { keyframes } from "styled-components";
 
 export const Arrow = styled.div`
@@ -95,7 +96,7 @@ export const HoverBox = styled.div`
   line-height: 1.25;
   height: 7.5rem;
   right: 0;
-  bottom: 0;
+  bottom: -100%;
   left: 0;
   display: none;
 
@@ -124,10 +125,10 @@ export const GreyBg = styled.div`
   left: 0;
 `
 
-export const BlurBg = styled.img`
+export const BlurBg = styled(Img)`
   object-fit: cover;
   object-position: 50% 100%;
-  filter: blur(20px);
+  filter: blur(15px);
   width: 100%;
   position: absolute;
   height: 100vh;
@@ -185,7 +186,7 @@ export const HoverBoxMobile = styled.div`
   overflow: hidden;
   line-height: 1.25;
   right: 0;
-  bottom: 0;
+  bottom: -100%;
   left: 0;
 
   @media (min-width: 40em) {

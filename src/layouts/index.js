@@ -193,6 +193,7 @@ class TemplateWrapper extends React.Component {
                         width: "100%",
                         height: "100%"
                       }}
+                    position="absolute"
                     alt={title}
                     sizes={image.sizes}
                   />
@@ -201,8 +202,8 @@ class TemplateWrapper extends React.Component {
                     <CaptionTitle hide className="hover-show">{title}</CaptionTitle>
                     <Caption className="hover-show">{description}</Caption>
                     <GreyBg className="hover-show" />
-                    <BlurBg className="hover-show" scale src={image.url} />
-                    <BlurBg className="hover-show" src={image.url} />
+                    <BlurBg className="hover-show" style={{position:'absolute'}} scale sizes={image.sizes} />
+                    <BlurBg className="hover-show" style={{position:'absolute'}} sizes={image.sizes} />
                   </HoverBox>
                   <MobileInfo htmlFor={i + '-' + index}>Project Info</MobileInfo>
                   <MobileState id={i + '-' + index} type="checkbox" style={{display: 'none'}} />
@@ -210,8 +211,8 @@ class TemplateWrapper extends React.Component {
                     <CaptionTitle hide>{title}</CaptionTitle>
                     <Caption space>{description}</Caption>
                     <GreyBg />
-                    <BlurBg scale src={image.url} />
-                    <BlurBg src={image.url} />
+                    <BlurBg style={{position:'absolute'}} scale sizes={image.sizes} />
+                    <BlurBg style={{position:'absolute'}} sizes={image.sizes} />
                     <MobileClose htmlFor={i + '-' + index}>close</MobileClose>
                   </HoverBoxMobile>
                 </div>
