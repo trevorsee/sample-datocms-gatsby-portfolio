@@ -119,10 +119,8 @@ class TemplateWrapper extends React.Component {
     <div>
       <HelmetDatoCms
         favicon={data.datoCmsSite.faviconMetaTags}
-        title={data.datoCmsSite.globalSeo.fallbackSeo.title}
+        seo={data.datoCmsAbout.seoMetaTags}
       >
-        <title>{data.datoCmsSite.siteName}</title>
-        <meta name="description" content={data.datoCmsSite.globalSeo.fallbackSeo.description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </HelmetDatoCms>
 
@@ -240,13 +238,14 @@ export const query = graphql`
     datoCmsSite {
       globalSeo {
         siteName
-        fallbackSeo {
-          title
-          description
-        }
       }
       faviconMetaTags {
         ...GatsbyDatoCmsFaviconMetaTags
+      }
+    }
+    datoCmsAbout {
+      seoMetaTags {
+        ...GatsbyDatoCmsSeoMetaTags
       }
     }
     allDatoCmsProject(sort: { fields: [position], order: ASC }) {
