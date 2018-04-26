@@ -67,6 +67,12 @@ class TemplateWrapper extends React.Component {
     }
   }
 
+  componentDidMount() {
+    var event = document.createEvent('HTMLEvents');
+    event.initEvent('resize', true, false);
+    window.dispatchEvent(event);
+  }
+
   render() {
     const { children, data } = this.props
 
