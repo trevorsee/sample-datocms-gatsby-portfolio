@@ -179,7 +179,7 @@ class TemplateWrapper extends React.Component {
               renderCenterLeftControls={() => <div />}
             >
               {stack.slides.map(({ id, title, description, image }, index) => (
-                <div style={{ height: "100vh", width: "100vw" }} key={id}>
+                <div style={{ height: "100vh", width: "100vw", position: "relative" }} key={id}>
                   <Img
                     style={{
                         position: "absolute",
