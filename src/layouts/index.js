@@ -67,12 +67,6 @@ class TemplateWrapper extends React.Component {
     }
   }
 
-  componentDidMount() {
-    var event = document.createEvent('HTMLEvents');
-    event.initEvent('resize', true, false);
-    window.dispatchEvent(event);
-  }
-
   render() {
     const { children, data } = this.props
 
@@ -111,6 +105,12 @@ class TemplateWrapper extends React.Component {
     const upSlide = (e) => {
       e.preventDefault()
       this[`stack${this.state.stackIndex}`].previousSlide();
+    }
+
+    const loadedImage = () => {
+      var event = document.createEvent('HTMLEvents');
+      event.initEvent('resize', true, false);
+      window.dispatchEvent(event);
     }
 
     baseStyles()
@@ -187,7 +187,7 @@ class TemplateWrapper extends React.Component {
               {stack.slides.map(({ id, title, description, image }, index) => (
                 <div style={{ height: "100vh", width: "100vw", position: "relative" }} key={id}>
                   <Img
-                    onLoad={() => console.log('ping')}
+                    onLoad={loadedImage}
                     style={{
                         position: "absolute",
                         left: 0,
