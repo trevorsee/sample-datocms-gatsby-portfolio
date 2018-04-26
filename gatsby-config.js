@@ -2,11 +2,11 @@ require('dotenv').config()
 
 module.exports = {
   siteMetadata: {
-    title: `Creative Portfolio`,
+    title: `The Independent Group`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-sass`,
+    `gatsby-plugin-styled-components`,
     `gatsby-transformer-remark`,
     {
       resolve: `gatsby-source-datocms`,
