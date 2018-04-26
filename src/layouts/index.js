@@ -113,10 +113,10 @@ class TemplateWrapper extends React.Component {
     <div>
       <HelmetDatoCms
         favicon={data.datoCmsSite.faviconMetaTags}
-        title={data.datoCmsSite.fallbackSeo.title}
+        title={data.datoCmsSite.globalSeo.fallbackSeo.title}
       >
         <title>{data.datoCmsSite.siteName}</title>
-        <meta name="description" content={data.datoCmsSite.fallbackSeo.description} />
+        <meta name="description" content={data.datoCmsSite.globalSeo.fallbackSeo.description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </HelmetDatoCms>
 
