@@ -25,51 +25,6 @@ import {
   MobileState,
 } from '../styles/slider'
 
-const settingsHorizontal = {
-  arrows: true,
-  dots: false,
-  infinite: false,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-}
-
-const settingsVertical = {
-  arrows: true,
-  dots: false,
-  infinite: false,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  vertical: true,
-}
-
-const handleArrows = function(e) {
-  e.preventDefault()
-  switch (event.key) {
-    case 'ArrowUp': {
-      console.log('up')
-      break
-    }
-    case 'ArrowRight': {
-      console.log('right')
-      break
-    }
-    case 'ArrowDown': {
-      console.log('Down')
-      break
-    }
-    case 'ArrowLeft': {
-      console.log('left')
-      break
-    }
-    default: {
-      console.log('Invalid choice')
-      break
-    }
-  }
-}
-
 class TemplateWrapper extends React.Component {
   constructor() {
     super()
@@ -78,7 +33,28 @@ class TemplateWrapper extends React.Component {
       stackTotal: 1,
       slideIndex: 0,
       slideTotal: 1,
+      windowWidth: 0,
+      windowHeight: 0,
+      showLeftArrow: false,
+      showRightArrow: false,
     }
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions()
+    window.addEventListener('resize', this.updateWindowDimensions)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions)
+  }
+
+  updateWindowDimensions() {
+    this.setState({
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
+    })
   }
 
   render() {
@@ -125,6 +101,26 @@ class TemplateWrapper extends React.Component {
       this[`stack${this.state.stackIndex}`].previousSlide()
     }
 
+    const handleMousePos = e => {
+      var x = e.clientX / this.state.windowWidth
+
+      if (this.state.showLeftArrow && x > 0.25) {
+        this.setState({ showLeftArrow: false })
+      }
+
+      if (this.state.showRightArrow && x < 0.75) {
+        this.setState({ showRightArrow: false })
+      }
+
+      if (!this.state.showLeftArrow && x < 0.25) {
+        this.setState({ showLeftArrow: true })
+      }
+
+      if (!this.state.showRightArrow && x > 0.75) {
+        this.setState({ showRightArrow: true })
+      }
+    }
+
     const loadedImage = () => {
       var event = document.createEvent('HTMLEvents')
       event.initEvent('resize', true, false)
@@ -135,6 +131,8 @@ class TemplateWrapper extends React.Component {
 
     return (
       <div>
+        <p>{}</p>
+        <p>{this.state.showRightArrow}</p>
         <HelmetDatoCms
           favicon={data.datoCmsSite.faviconMetaTags}
           seo={data.datoCmsAbout.seoMetaTags}
@@ -166,6 +164,7 @@ class TemplateWrapper extends React.Component {
         {console.log(this.state)}
 
         <div
+          onMouseMove={handleMousePos}
           style={{
             position: 'fixed',
             top: 0,
@@ -182,6 +181,7 @@ class TemplateWrapper extends React.Component {
             cellSpacing={0}
             speed={500}
             easing="easeCubicOut"
+            dragging
             afterSlide={stackIndex =>
               this.setState({
                 stackIndex,
@@ -192,19 +192,22 @@ class TemplateWrapper extends React.Component {
             }
             renderBottomCenterControls={() => <div />}
             renderCenterRightControls={() =>
+              !this.state.showRightArrow &&
               this.state.stackIndex == this.state.stackTotal &&
               this.state.slideIndex == this.state.slideTotal ? null : (
-                <Arrow>
-                  <RightArrow onClick={() => rightClick()} />
-                </Arrow>
+                <RightArrow
+                  show={this.state.showRightArrow}
+                  onClick={() => rightClick()}
+                />
               )
             }
             renderCenterLeftControls={() =>
               this.state.stackIndex == 0 &&
               this.state.slideIndex == 0 ? null : (
-                <Arrow>
-                  <LeftArrow onClick={() => leftClick()} />
-                </Arrow>
+                <LeftArrow
+                  show={this.state.showLeftArrow}
+                  onClick={() => leftClick()}
+                />
               )
             }
           >
@@ -214,6 +217,7 @@ class TemplateWrapper extends React.Component {
                 key={stack.id}
                 afterSlide={slideIndex => this.setState({ slideIndex })}
                 vertical
+                dragging
                 cellSpacing={0}
                 speed={500}
                 easing="easeCubicOut"
@@ -227,7 +231,10 @@ class TemplateWrapper extends React.Component {
                 renderCenterLeftControls={() => <div />}
               >
                 {stack.slides.map(
-                  ({ id, title, description, image }, index) => (
+                  (
+                    { id, title, description, image, focalX, focalY },
+                    index
+                  ) => (
                     <div
                       style={{
                         height: '100vh',
@@ -246,6 +253,10 @@ class TemplateWrapper extends React.Component {
                           height: '100%',
                           pointerEvents: 'none',
                         }}
+                        imgStyle={{
+                          objectPosition: `${focalX}% ${focalY}%`,
+                          pointerEvents: 'none',
+                        }}
                         position="absolute"
                         alt={title}
                         sizes={image.sizes}
@@ -262,12 +273,18 @@ class TemplateWrapper extends React.Component {
                         <BlurBg
                           className="hover-show"
                           style={{ position: 'absolute' }}
+                          imgStyle={{
+                            objectPosition: `${focalX}% ${focalY}%`,
+                          }}
                           scale
                           sizes={image.sizes}
                         />
                         <BlurBg
                           className="hover-show"
                           style={{ position: 'absolute' }}
+                          imgStyle={{
+                            objectPosition: `${focalX}% ${focalY}%`,
+                          }}
                           sizes={image.sizes}
                         />
                       </HoverBox>
@@ -339,6 +356,8 @@ export const query = graphql`
             id
             title
             description
+            focalX
+            focalY
             image {
               id
               sizes {

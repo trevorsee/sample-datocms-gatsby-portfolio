@@ -3,19 +3,8 @@ import styled from 'styled-components'
 import Img from 'gatsby-image'
 import { keyframes } from 'styled-components'
 
-export const Arrow = styled.div`
-  width: 25vw;
-  height: 80vh;
-  * {
-    opacity: 0;
-    transition: opacity 0.25s;
-  }
-  &:hover * {
-    opacity: 1;
-  }
-`
-
 export const LeftArrow = styled.div`
+  display: ${props => (props.show ? 'block' : 'none')};
   position: absolute;
   top: 50%;
   cursor: pointer;
@@ -36,6 +25,7 @@ export const LeftArrow = styled.div`
 `
 
 export const RightArrow = styled.div`
+  display: ${props => (props.show ? 'block' : 'none')};
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
