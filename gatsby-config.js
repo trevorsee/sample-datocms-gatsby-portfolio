@@ -6,6 +6,12 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: 'UA-96203809-1',
+      },
+    },
     `gatsby-plugin-styled-components`,
     `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
@@ -17,17 +23,17 @@ module.exports = {
       },
     },
     {
-    resolve: `gatsby-plugin-manifest`,
-    options: {
-      name: "The Independent Group",
-      short_name: "IG",
-      start_url: "/",
-      background_color: "#ffffff",
-      theme_color: "#3152e5",
-      display: "minimal-ui",
-      icon: "src/assets/favicon.png",
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: 'The Independent Group',
+        short_name: 'IG',
+        start_url: '/',
+        background_color: '#ffffff',
+        theme_color: '#3152e5',
+        display: 'minimal-ui',
+        icon: 'src/assets/favicon.png',
+      },
     },
-  },
-  `gatsby-plugin-offline`
+    `gatsby-plugin-offline`,
   ],
 }
