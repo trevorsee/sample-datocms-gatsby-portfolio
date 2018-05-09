@@ -2,16 +2,20 @@ import React from 'react'
 import Link from 'gatsby-link'
 import { HelmetDatoCms } from 'gatsby-source-datocms'
 
-import close from "../assets/close.svg"
-import { Container, Close, Block, Left, Right } from "../styles/about"
-import { Logo } from "../styles/logo"
+import close from '../assets/close.svg'
+import { Container, Close, Block, Left, Right } from '../styles/about'
+import { Logo } from '../styles/logo'
 
-const About = ({data}) => (
+const About = ({ data }) => (
   <div>
     {console.log()}
     <Container>
-      <Link to="/"><Logo>The Independent Group</Logo></Link>
-      <Link to="/"><Close src={close} alt="back" /></Link>
+      <Link to="/">
+        <Logo>The Independent Group</Logo>
+      </Link>
+      <Link to="/">
+        <Close src={close} alt="back" />
+      </Link>
       <Block>
         <Left
           dangerouslySetInnerHTML={{

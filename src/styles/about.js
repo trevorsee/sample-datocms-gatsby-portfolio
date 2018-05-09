@@ -1,19 +1,19 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
 export const Container = styled.div`
   min-height: 100vh;
-  background-color: rgba(49,82,229,.9);
-`;
+  background-color: rgba(49, 82, 229, 0.9);
+`
 
 export const Close = styled.img`
-  text-shadow: 0 0 10px rgba(0,0,0,.5);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   margin: 2rem;
   position: fixed;
   right: 0;
   top: 0;
   transform: translateZ(0);
-  transition: transform .25s ease-out;
+  transition: transform 0.25s ease-out;
   backface-visibility: hidden;
   :focus,
   :hover {
@@ -65,9 +65,10 @@ export const Left = styled.div`
 `
 
 export const Right = styled.div`
-max-width: 50em;
-margin: 0;
+  max-width: 50em;
+  margin: 0;
 
-@media (min-width: 52em) {
-  margin-left: 2rem;
-}`
+  @media (min-width: 52em) {
+    margin-left: 2rem;
+  }
+`

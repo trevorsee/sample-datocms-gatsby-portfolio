@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
 export const Logo = styled.div`
-  text-shadow: 0 0 10px rgba(0,0,0,.5);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 1;
   font-size: 1.5rem;
   margin-top: 2rem;
@@ -13,7 +13,7 @@ export const Logo = styled.div`
   color: white;
   font-weight: 900;
   transform: translateZ(0);
-  transition: transform .25s ease-out;
+  transition: transform 0.25s ease-out;
   backface-visibility: hidden;
   width: 100vw;
   text-align: center;
@@ -28,5 +28,4 @@ export const Logo = styled.div`
     font-size: 2rem;
     width: auto;
   }
-
-`;
+`

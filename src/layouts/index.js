@@ -1,14 +1,29 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Link from "gatsby-link";
-import { HelmetDatoCms } from "gatsby-source-datocms";
-import Carousel from "nuka-carousel";
-import KeyHandler, { KEYDOWN } from "react-key-handler";
-import Img from "gatsby-image";
+import React from 'react'
+import PropTypes from 'prop-types'
+import Link from 'gatsby-link'
+import { HelmetDatoCms } from 'gatsby-source-datocms'
+import Carousel from 'nuka-carousel'
+import KeyHandler, { KEYDOWN } from 'react-key-handler'
+import Img from 'gatsby-image'
 
 import baseStyles from '../styles/base'
-import "../assets/fonts/1706-EOCCJS.css"
-import { Arrow, LeftArrow, RightArrow, Hello, Counter, HoverBox, GreyBg, BlurBg, CaptionTitle, Caption, HoverBoxMobile, MobileClose, MobileInfo, MobileState } from '../styles/slider'
+import '../assets/fonts/1706-EOCCJS.css'
+import {
+  Arrow,
+  LeftArrow,
+  RightArrow,
+  Hello,
+  Counter,
+  HoverBox,
+  GreyBg,
+  BlurBg,
+  CaptionTitle,
+  Caption,
+  HoverBoxMobile,
+  MobileClose,
+  MobileInfo,
+  MobileState,
+} from '../styles/slider'
 
 const settingsHorizontal = {
   arrows: true,
@@ -16,8 +31,8 @@ const settingsHorizontal = {
   infinite: false,
   speed: 500,
   slidesToShow: 1,
-  slidesToScroll: 1
-};
+  slidesToScroll: 1,
+}
 
 const settingsVertical = {
   arrows: true,
@@ -26,44 +41,43 @@ const settingsVertical = {
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
-  vertical: true
-};
+  vertical: true,
+}
 
 const handleArrows = function(e) {
-  e.preventDefault();
+  e.preventDefault()
   switch (event.key) {
-    case "ArrowUp": {
-      console.log("up");
-      break;
+    case 'ArrowUp': {
+      console.log('up')
+      break
     }
-    case "ArrowRight": {
-      console.log("right");
-      break;
+    case 'ArrowRight': {
+      console.log('right')
+      break
     }
-    case "ArrowDown": {
-      console.log("Down");
-      break;
+    case 'ArrowDown': {
+      console.log('Down')
+      break
     }
-    case "ArrowLeft": {
-      console.log("left");
-      break;
+    case 'ArrowLeft': {
+      console.log('left')
+      break
     }
     default: {
-      console.log("Invalid choice");
-      break;
+      console.log('Invalid choice')
+      break
     }
   }
-};
+}
 
 class TemplateWrapper extends React.Component {
-
   constructor() {
     super()
     this.state = {
       stackIndex: 0,
       stackTotal: 1,
       slideIndex: 0,
-      slideTotal: 1
+      slideTotal: 1,
     }
   }
 
@@ -71,10 +85,11 @@ class TemplateWrapper extends React.Component {
     const { children, data } = this.props
 
     const rightClick = () => {
-      const current = this[`stack${this.state.stackIndex}`].state.currentSlide + 1
+      const current =
+        this[`stack${this.state.stackIndex}`].state.currentSlide + 1
       const total = this[`stack${this.state.stackIndex}`].state.slideCount
       const stackCount = this._stacks.state.slideCount
-      if ( current == total && this[`stack${this.state.stackIndex + 1}`] ) {
+      if (current == total && this[`stack${this.state.stackIndex + 1}`]) {
         this[`stack${this.state.stackIndex + 1}`].goToSlide(0)
         this._stacks.nextSlide()
       } else {
@@ -82,157 +97,223 @@ class TemplateWrapper extends React.Component {
       }
     }
     const leftClick = () => {
-      const current = this[`stack${this.state.stackIndex}`].state.currentSlide + 1
-      if ( current == 1 && this[`stack${this.state.stackIndex - 1}`] ) {
-        this[`stack${this.state.stackIndex - 1}`].goToSlide(this[`stack${this.state.stackIndex - 1}`].state.slideCount)
+      const current =
+        this[`stack${this.state.stackIndex}`].state.currentSlide + 1
+      if (current == 1 && this[`stack${this.state.stackIndex - 1}`]) {
+        this[`stack${this.state.stackIndex - 1}`].goToSlide(
+          this[`stack${this.state.stackIndex - 1}`].state.slideCount
+        )
         this._stacks.previousSlide()
       } else {
         this[`stack${this.state.stackIndex}`].previousSlide()
       }
     }
-    const rightSlide = (e) => {
+    const rightSlide = e => {
       e.preventDefault()
-      this._stacks.nextSlide();
+      this._stacks.nextSlide()
     }
-    const leftSlide = (e) => {
+    const leftSlide = e => {
       e.preventDefault()
-      this._stacks.previousSlide();
+      this._stacks.previousSlide()
     }
-    const downSlide = (e) => {
+    const downSlide = e => {
       e.preventDefault()
-      this[`stack${this.state.stackIndex}`].nextSlide();
+      this[`stack${this.state.stackIndex}`].nextSlide()
     }
-    const upSlide = (e) => {
+    const upSlide = e => {
       e.preventDefault()
-      this[`stack${this.state.stackIndex}`].previousSlide();
+      this[`stack${this.state.stackIndex}`].previousSlide()
     }
 
     const loadedImage = () => {
-      var event = document.createEvent('HTMLEvents');
-      event.initEvent('resize', true, false);
-      window.dispatchEvent(event);
+      var event = document.createEvent('HTMLEvents')
+      event.initEvent('resize', true, false)
+      window.dispatchEvent(event)
     }
 
     baseStyles()
 
     return (
-    <div>
-      <HelmetDatoCms
-        favicon={data.datoCmsSite.faviconMetaTags}
-        seo={data.datoCmsAbout.seoMetaTags}
-      >
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </HelmetDatoCms>
-
-      <KeyHandler
-        keyEventName={KEYDOWN}
-        keyValue="ArrowUp"
-        onKeyHandle={upSlide}
-      />
-      <KeyHandler
-        keyEventName={KEYDOWN}
-        keyValue="ArrowRight"
-        onKeyHandle={rightSlide}
-      />
-      <KeyHandler
-        keyEventName={KEYDOWN}
-        keyValue="ArrowDown"
-        onKeyHandle={downSlide}
-      />
-      <KeyHandler
-        keyEventName={KEYDOWN}
-        keyValue="ArrowLeft"
-        onKeyHandle={leftSlide}
-      />
-
-      {console.log(this.state)}
-
-      <div style={{ position: "fixed", top: 0, right: 0, bottom: 0, left: 0, zIndex: -1 }}>
-        { this.state.stackIndex == 0 && this.state.slideIndex == 0 &&
-          <Hello>Hello.</Hello>
-        }
-        <Carousel
-          ref={(c) => this._stacks = c}
-          cellSpacing={0}
-          speed={500}
-          easing="easeCubicOut"
-          afterSlide={stackIndex => this.setState({
-            stackIndex,
-            stackTotal: this._stacks.state.slideCount - 1,
-            slideIndex: this[`stack${stackIndex}`].state.currentSlide,
-            slideTotal: this[`stack${stackIndex}`].state.slideCount - 1,
-          })}
-          renderBottomCenterControls={() => <div />}
-          renderCenterRightControls={() => this.state.stackIndex == this.state.stackTotal && this.state.slideIndex == this.state.slideTotal ? null : <Arrow><RightArrow onClick={() => rightClick() } /></Arrow> }
-          renderCenterLeftControls={() => this.state.stackIndex == 0 && this.state.slideIndex == 0 ? null : <Arrow><LeftArrow onClick={() => leftClick() } /></Arrow> }
-        >
-          {data.allDatoCmsProject.edges.map(({ node: stack }, i) => (
-            <Carousel
-              ref={(c) => this[`stack${i}`] = c}
-              key={stack.id}
-              afterSlide={slideIndex => this.setState({ slideIndex })}
-              vertical
-              cellSpacing={0}
-              speed={500}
-              easing="easeCubicOut"
-              renderTopRightControls={({ currentSlide, slideCount }) => (
-                <Counter>{currentSlide + 1} / {slideCount}</Counter>
-              )}
-              renderBottomCenterControls={() => <div />}
-              renderCenterRightControls={() => <div />}
-              renderCenterLeftControls={() => <div />}
-            >
-              {stack.slides.map(({ id, title, description, image }, index) => (
-                <div style={{ height: "100vh", width: "100vw", position: "relative" }} key={id}>
-                  <Img
-                    onLoad={loadedImage}
-                    style={{
-                        position: "absolute",
-                        left: 0,
-                        top: 0,
-                        width: "100%",
-                        height: "100%"
-                      }}
-                    position="absolute"
-                    alt={title}
-                    sizes={image.sizes}
-                  />
-                  <HoverBox>
-                    <CaptionTitle className="hover-hide">{title}</CaptionTitle>
-                    <CaptionTitle hide className="hover-show">{title}</CaptionTitle>
-                    <Caption className="hover-show">{description}</Caption>
-                    <GreyBg className="hover-show" />
-                    <BlurBg className="hover-show" style={{position:'absolute'}} scale sizes={image.sizes} />
-                    <BlurBg className="hover-show" style={{position:'absolute'}} sizes={image.sizes} />
-                  </HoverBox>
-                  <MobileInfo htmlFor={i + '-' + index}>Project Info</MobileInfo>
-                  <MobileState id={i + '-' + index} type="checkbox" style={{display: 'none'}} />
-                  <HoverBoxMobile>
-                    <CaptionTitle hide>{title}</CaptionTitle>
-                    <Caption space>{description}</Caption>
-                    <GreyBg />
-                    <BlurBg style={{position:'absolute'}} scale sizes={image.sizes} />
-                    <BlurBg style={{position:'absolute'}} sizes={image.sizes} />
-                    <MobileClose htmlFor={i + '-' + index}>close</MobileClose>
-                  </HoverBoxMobile>
-                </div>
-              ))}
-            </Carousel>
-          ))}
-        </Carousel>
-      </div>
       <div>
-        {children()}
+        <HelmetDatoCms
+          favicon={data.datoCmsSite.faviconMetaTags}
+          seo={data.datoCmsAbout.seoMetaTags}
+        >
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </HelmetDatoCms>
+
+        <KeyHandler
+          keyEventName={KEYDOWN}
+          keyValue="ArrowUp"
+          onKeyHandle={upSlide}
+        />
+        <KeyHandler
+          keyEventName={KEYDOWN}
+          keyValue="ArrowRight"
+          onKeyHandle={rightSlide}
+        />
+        <KeyHandler
+          keyEventName={KEYDOWN}
+          keyValue="ArrowDown"
+          onKeyHandle={downSlide}
+        />
+        <KeyHandler
+          keyEventName={KEYDOWN}
+          keyValue="ArrowLeft"
+          onKeyHandle={leftSlide}
+        />
+
+        {console.log(this.state)}
+
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            zIndex: -1,
+          }}
+        >
+          {this.state.stackIndex == 0 &&
+            this.state.slideIndex == 0 && <Hello>Hello.</Hello>}
+          <Carousel
+            ref={c => (this._stacks = c)}
+            cellSpacing={0}
+            speed={500}
+            easing="easeCubicOut"
+            afterSlide={stackIndex =>
+              this.setState({
+                stackIndex,
+                stackTotal: this._stacks.state.slideCount - 1,
+                slideIndex: this[`stack${stackIndex}`].state.currentSlide,
+                slideTotal: this[`stack${stackIndex}`].state.slideCount - 1,
+              })
+            }
+            renderBottomCenterControls={() => <div />}
+            renderCenterRightControls={() =>
+              this.state.stackIndex == this.state.stackTotal &&
+              this.state.slideIndex == this.state.slideTotal ? null : (
+                <Arrow>
+                  <RightArrow onClick={() => rightClick()} />
+                </Arrow>
+              )
+            }
+            renderCenterLeftControls={() =>
+              this.state.stackIndex == 0 &&
+              this.state.slideIndex == 0 ? null : (
+                <Arrow>
+                  <LeftArrow onClick={() => leftClick()} />
+                </Arrow>
+              )
+            }
+          >
+            {data.allDatoCmsProject.edges.map(({ node: stack }, i) => (
+              <Carousel
+                ref={c => (this[`stack${i}`] = c)}
+                key={stack.id}
+                afterSlide={slideIndex => this.setState({ slideIndex })}
+                vertical
+                cellSpacing={0}
+                speed={500}
+                easing="easeCubicOut"
+                renderTopRightControls={({ currentSlide, slideCount }) => (
+                  <Counter>
+                    {currentSlide + 1} / {slideCount}
+                  </Counter>
+                )}
+                renderBottomCenterControls={() => <div />}
+                renderCenterRightControls={() => <div />}
+                renderCenterLeftControls={() => <div />}
+              >
+                {stack.slides.map(
+                  ({ id, title, description, image }, index) => (
+                    <div
+                      style={{
+                        height: '100vh',
+                        width: '100vw',
+                        position: 'relative',
+                      }}
+                      key={id}
+                    >
+                      <Img
+                        onLoad={loadedImage}
+                        style={{
+                          position: 'absolute',
+                          left: 0,
+                          top: 0,
+                          width: '100%',
+                          height: '100%',
+                          pointerEvents: 'none',
+                        }}
+                        position="absolute"
+                        alt={title}
+                        sizes={image.sizes}
+                      />
+                      <HoverBox>
+                        <CaptionTitle className="hover-hide">
+                          {title}
+                        </CaptionTitle>
+                        <CaptionTitle hide className="hover-show">
+                          {title}
+                        </CaptionTitle>
+                        <Caption className="hover-show">{description}</Caption>
+                        <GreyBg className="hover-show" />
+                        <BlurBg
+                          className="hover-show"
+                          style={{ position: 'absolute' }}
+                          scale
+                          sizes={image.sizes}
+                        />
+                        <BlurBg
+                          className="hover-show"
+                          style={{ position: 'absolute' }}
+                          sizes={image.sizes}
+                        />
+                      </HoverBox>
+                      <MobileInfo htmlFor={i + '-' + index}>
+                        Project Info
+                      </MobileInfo>
+                      <MobileState
+                        id={i + '-' + index}
+                        type="checkbox"
+                        style={{ display: 'none' }}
+                      />
+                      <HoverBoxMobile>
+                        <CaptionTitle hide>{title}</CaptionTitle>
+                        <Caption space>{description}</Caption>
+                        <GreyBg />
+                        <BlurBg
+                          style={{ position: 'absolute' }}
+                          scale
+                          sizes={image.sizes}
+                        />
+                        <BlurBg
+                          style={{ position: 'absolute' }}
+                          sizes={image.sizes}
+                        />
+                        <MobileClose htmlFor={i + '-' + index}>
+                          close
+                        </MobileClose>
+                      </HoverBoxMobile>
+                    </div>
+                  )
+                )}
+              </Carousel>
+            ))}
+          </Carousel>
+        </div>
+        <div>{children()}</div>
       </div>
-    </div>
-  )};
+    )
+  }
 }
 
 TemplateWrapper.propTypes = {
-  children: PropTypes.func
-};
+  children: PropTypes.func,
+}
 
-export default TemplateWrapper;
+export default TemplateWrapper
 
 export const query = graphql`
   query LayoutQuery {
@@ -269,4 +350,4 @@ export const query = graphql`
       }
     }
   }
-`;
+`
